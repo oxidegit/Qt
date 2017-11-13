@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QDebug>
+#include "serialcommunication.h"
 
 namespace Ui {
     class environmentUI;
@@ -17,6 +18,9 @@ public:
     explicit environmentUI(QWidget *parent = 0);
     ~environmentUI();
 
+
+    void setSerial(SerialCommunication *s){serial = s;};
+
 public slots:
     void getTemperature(int t);
     void gethumidity(int h);
@@ -26,6 +30,8 @@ private:
 
     int Temperature;
     int humidity;
+
+    SerialCommunication *serial;
 
 private slots:
 
