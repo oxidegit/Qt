@@ -16,7 +16,7 @@
 #include <QDebug>
 #include <QLineEdit>
 
-#include "serialcommunication.h"
+
 
 namespace Ui {
     class patternUI;
@@ -42,8 +42,6 @@ public:
     explicit patternUI(QWidget *parent = 0);
     ~patternUI();
 
-    void setSerial(SerialCommunication *s){serial = s;};
-
     void setPattern(QString p);
 
     int sendTem(int p);
@@ -51,6 +49,10 @@ public:
 
     void refValue(int p);
     void setValue();
+
+    void setButtonImg(int c,int p);
+    int getPrve();
+    void setPrve(int c);
 
 signals:
     void signalP(int);
@@ -71,6 +73,11 @@ private slots:
     void okkkkkButSlot();
     void cancelButSlot();
 
+    void temAddButSlot();
+    void temSelButSlot();
+    void humAddButSlot();
+    void humSelButSlot();
+
     //void toDialogSlot();
 
 private:
@@ -81,10 +88,10 @@ private:
     QLineEdit *temLineEdit;
     QLineEdit *humLineEdit;
 
-    QPushButton *aqPatButton;//安全模式
-    QPushButton *smPatButton;//睡眠
-    QPushButton *ljPatButton;//离家
-    QPushButton *shPatButton;//生活
+    QPushButton *aqPatButton;
+    QPushButton *smPatButton;
+    QPushButton *ljPatButton;
+    QPushButton *shPatButton;
 
     QPushButton *temAddBut;
     QPushButton *temSelBut;
@@ -100,13 +107,16 @@ private:
     Pattern pattern[4];
 
     QString pName;
+
     int pTemp;
     int pHumid;
-    int pDoor;
-    int pWins;
+
     int pchoose;
 
-    SerialCommunication *serial;
+    int curButton;
+    int prveButton;
+
+
 };
 
 #endif // PATTERNUI_H
