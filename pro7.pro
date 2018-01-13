@@ -15,13 +15,15 @@ SOURCES += main.cpp\
     patternui.cpp \
     lightui.cpp \
     equipmentui.cpp \
-    environmentui.cpp
+    environmentui.cpp \
+    switchbutton.cpp
 
 HEADERS  += dialog.h \
     patternui.h \
     lightui.h \
     equipmentui.h \
-    environmentui.h
+    environmentui.h \
+    switchbutton.h
 
 FORMS    += dialog.ui \
     patternui.ui \
@@ -30,4 +32,5 @@ FORMS    += dialog.ui \
     environmentui.ui
 
 RESOURCES += \
-    img.qrc
+    img.qrc \
+    img/pic.qrc
