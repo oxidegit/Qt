@@ -1,14 +1,10 @@
 #include "equipmentui.h"
 #include "ui_equipmentui.h"
-#include "serialcommunication.h"
-#include <QDebug>
 
 equipmentUI::equipmentUI(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::equipmentUI)
 {
-    //serial = new SerialCommunication();
-
     QLabel *televLabel = new QLabel(this);
     QLabel *soundLabel = new QLabel(this);
 
@@ -19,8 +15,8 @@ equipmentUI::equipmentUI(QWidget *parent) :
     QLabel *Label_2 = new QLabel(this);
     QLabel *Label_3 = new QLabel(this);
     QLabel *Label_4 = new QLabel(this);
-    Label_1->setText("<font color=white size=18><B>电视          </B></font>");
-    Label_2->setText("<font color=white size=18><B>音响          </B></font>");
+    Label_1->setText("<font face='STHupo' color=white size=18>电视          </font>");
+    Label_2->setText("<font face='STHupo' color=white size=18>音响          </font>");
     Label_3->setText("   ");
     Label_4->setText("   ");
 
@@ -64,9 +60,8 @@ equipmentUI::equipmentUI(QWidget *parent) :
 
     this->setLayout(mainLayout);
 
-    //checkedChanged
-    connect(switchTelBut,SIGNAL(checkedChanged(bool)),this,SLOT(switchTelButSlot(bool)));
-    connect(switchSouBut,SIGNAL(checkedChanged(bool)),this,SLOT(switchSouButSlot(bool)));
+    connect(switchTelBut,SIGNAL(clicked()),this,SLOT(switchTelButSlot()));
+    connect(switchSouBut,SIGNAL(clicked()),this,SLOT(switchSouButSlot()));
 
     ui->setupUi(this);
 }
@@ -77,15 +72,13 @@ equipmentUI::~equipmentUI()
 }
 
 
-void equipmentUI::switchTelButSlot(bool)
+void equipmentUI::switchTelButSlot()
 {
 
-    //qDebug() << "tv";
-    serial->qtUpdateEquipState(TV);//同步qt
 }
 
 
-void equipmentUI::switchSouButSlot(bool)
+void equipmentUI::switchSouButSlot()
 {
-    serial->qtUpdateEquipState(AUDIO);//同步qt
+
 }

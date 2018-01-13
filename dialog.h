@@ -13,16 +13,10 @@
 #include <QVBoxLayout>   // Ë®Æ½
 #include <QHBoxLayout>   // ´¹Ö±
 #include <QGridLayout>   // Íø×´
-
-#include <QIODevice>
-
 #include "patternui.h"
 #include "lightui.h"
 #include "equipmentui.h"
 #include "environmentui.h"
-
-#include "win_qextserialport.h"
-#include "serialcommunication.h"
 
 //#include "data.h"
 
@@ -37,10 +31,13 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
+    void setButtonImg(int c,int p);
+    int getPrve();
+    void setPrve(int c);
 
 public slots:
     void setModeText(int mode);
-    void readMyCom();
+
 private slots:
     void patButtonSlot();
     void equButtonSlot();
@@ -67,12 +64,10 @@ private:
 
     //Data data;
     QString curPat;
-    int npat;
-    int nequ;
-    int nlgh;
-    int nevi;
+    int curButton;
+    int prveButton;
 
-    SerialCommunication *serial;
+
 };
 
 #endif // DIALOG_H
