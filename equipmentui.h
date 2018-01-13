@@ -3,8 +3,10 @@
 
 #include <QWidget>
 #include <QLabel>
-#include <QGridLayout>   // Íø×´
+#include <QGridLayout>   // ï¿½ï¿½×´
 #include "switchbutton.h"
+
+#include "serialcommunication.h"
 
 namespace Ui {
     class equipmentUI;
@@ -17,10 +19,11 @@ class equipmentUI : public QWidget
 public:
     explicit equipmentUI(QWidget *parent = 0);
     ~equipmentUI();
+    void setSerial(SerialCommunication *s){serial = s;};
 
 private slots:
-    void switchTelButSlot();
-    void switchSouButSlot();
+    void switchTelButSlot(bool);
+    void switchSouButSlot(bool);
 signals:
     void clicked();
 
@@ -32,6 +35,8 @@ private:
 
     int e_TV;
     int e_JBL;
+
+    SerialCommunication *serial;
 };
 
 #endif // EQUIPMENTUI_H

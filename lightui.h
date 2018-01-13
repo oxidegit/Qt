@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include "serialcommunication.h"
 
 namespace Ui {
     class lightUI;
@@ -18,6 +19,7 @@ public:
 
 
     void setLight(int x);
+    void setSerial(SerialCommunication *s){serial = s;};
 
 private slots:
 
@@ -28,6 +30,8 @@ private slots:
 
 private:
     Ui::lightUI *ui;
+
+    SerialCommunication *serial;
 
     int i;
     int j;

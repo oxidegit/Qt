@@ -6,9 +6,12 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
 
+    this->serial = new SerialCommunication();
+    connect(serial->myCom, SIGNAL(readyRead()), this, SLOT(readMyCom()));
+
     this->setFixedSize(900,700);
 
-    curPat = "Éú»î";
+    curPat = "ï¿½ï¿½ï¿½ï¿½";
     curButton = 0;
     prveButton = 0;
 
@@ -30,13 +33,13 @@ Dialog::Dialog(QWidget *parent) :
     patShowLab->setFont(ft);
     timShowLab->setFont(ft);
 
-    QHBoxLayout *topLayout = new QHBoxLayout(); // ÉÏÃæµÄlabel
-    topLayout->addWidget(patShowLab);   // Ä£Ê½¡£
-    topLayout->addWidget(timShowLab);   // Ê±¼ä
+    QHBoxLayout *topLayout = new QHBoxLayout(); // ï¿½ï¿½ï¿½ï¿½ï¿½label
+    topLayout->addWidget(patShowLab);   // Ä£Ê½ï¿½ï¿½
+    topLayout->addWidget(timShowLab);   // Ê±ï¿½ï¿½
     topLayout->setMargin(0);
     topLayout->setSpacing(0);
 
-    mainShowLab = new QLabel("¼ÈÈ»Äã³ÏÐÄ³ÏÒâµÄ·¢ÎÊÁË!\nÎÒÃÇ¾Í´ó·¢´È±¯µÄ¸æËßÄã£¡\nÎªÁË·ÀÖ¹ÊÀ½ç±»ÆÆ»µ!\nÎªÁËÊØ»¤ÊÀ½çµÄºÍÆ½!\n¹á³¹°®ÓëÕæÊµµÄÐ°¶ñ!\n¿É°®ÓÖÃÔÈËµÄ·´ÅÉ½ÇÉ«!\nÎä²Ø£¡ Ð¡´ÎÀÉ£¡\nÎÒÃÇÊÇ´©ËóÔÚÒøºÓµÄ»ð¼ý¶Ó£¡\n°×¶´£¬°×É«µÄÃ÷ÌìÔÚµÈ×ÅÎÒÃÇ£¡\n¾ÍÊÇÕâÑù!ß÷!",this);
+    mainShowLab = new QLabel("ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½!\nï¿½ï¿½ï¿½Ç¾Í´ó·¢´È±ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ã£¡\nÎªï¿½Ë·ï¿½Ö¹ï¿½ï¿½ï¿½ç±»ï¿½Æ»ï¿½!\nÎªï¿½ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ï¿½Äºï¿½Æ½!\nï¿½á³¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½Ð°ï¿½ï¿½!\nï¿½É°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ËµÄ·ï¿½ï¿½É½ï¿½É«!\nï¿½ï¿½Ø£ï¿½ Ð¡ï¿½ï¿½ï¿½É£ï¿½\nï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓµÄ»ï¿½ï¿½ï¿½Ó£ï¿½\nï¿½×¶ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç£ï¿½\nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!ï¿½ï¿½!",this);
     QFont fy("STHupo", 20, 22);
     mainShowLab->setPalette(pe);
     mainShowLab->setFont(fy);
@@ -59,7 +62,7 @@ Dialog::Dialog(QWidget *parent) :
     lghButton->setStyleSheet("QPushButton{border-image:url(:/img//img/light.jpg);}");
     eviButton->setStyleSheet("QPushButton{border-image:url(:/img//img/atmosphere.jpg);}");
 
-    QHBoxLayout *bomLayout = new QHBoxLayout(); // ÏÂÃæµÄµ¼º½À¸
+    QHBoxLayout *bomLayout = new QHBoxLayout(); // ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½
     bomLayout->addWidget(patButton);
     bomLayout->addWidget(equButton);
     bomLayout->addWidget(lghButton);
@@ -77,6 +80,11 @@ Dialog::Dialog(QWidget *parent) :
     ligWeidget = new lightUI(this);
     equWeidget = new equipmentUI(this);
     envWeidget = new environmentUI(this);
+
+    patWeidget->setSerial(serial);
+    ligWeidget->setSerial(serial);
+    equWeidget->setSerial(serial);
+    envWeidget->setSerial(serial);
 
     patWeidget->setValue();
 
@@ -107,7 +115,7 @@ Dialog::Dialog(QWidget *parent) :
     connect(lghButton,SIGNAL(clicked()),this,SLOT(lghButtonSlot()));
     connect(eviButton,SIGNAL(clicked()),this,SLOT(eviButtonSlot()));
 
-    /***************************************°ó¶¨******************************/
+    /***************************************ï¿½ï¿½******************************/
     connect(patWeidget, SIGNAL(signalP(int)), this, SLOT(setModeText(int)));
     connect(patWeidget, SIGNAL(signalT(int)), envWeidget, SLOT(getTemperature(int)));
     connect(patWeidget, SIGNAL(signalH(int)), envWeidget, SLOT(gethumidity(int)));
@@ -226,23 +234,23 @@ void Dialog::setPrve(int c)
 
 void Dialog::setButtonImg(int c,int p)
 {
-    if (c == 1)    // Ä£Ê½°´Å¥°´ÏÂ
+    if (c == 1)    // Ä£Ê½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½
     {
         patButton->setStyleSheet("QPushButton{border-image:url(:/img//img/model_p.jpg);}");
         patButton->setMinimumSize(30,120);
 
     }
-    else if (c == 2)    // Éè±¸°´Å¥°´ÏÂ
+    else if (c == 2)    // ï¿½è±¸ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½
     {
         equButton->setStyleSheet("QPushButton{border-image:url(:/img//img/equipment_p.jpg);}");
         equButton->setMinimumSize(30,120);
     }
-    else if (c == 3)    //ÕÕÃ÷°´Å¥°´ÏÂ
+    else if (c == 3)    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½
     {
         lghButton->setStyleSheet("QPushButton{border-image:url(:/img//img/light_p.jpg);}");
         lghButton->setMinimumSize(30,120);
     }
-    else if (c == 4)    //»·¾³°´Å¥°´ÏÂ
+    else if (c == 4)    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½
     {
         eviButton->setStyleSheet("QPushButton{border-image:url(:/img//img/atmosphere_p.jpg);}");
         eviButton->setMinimumSize(30,120);
@@ -251,22 +259,22 @@ void Dialog::setButtonImg(int c,int p)
     ///////////////////////////////////////////////////////////////
 
 
-    if (p == 1)    //Ä£Ê½°´Å¥¸´Ô­
+    if (p == 1)    //Ä£Ê½ï¿½ï¿½Å¥ï¿½ï¿½Ô­
     {
         patButton->setStyleSheet("QPushButton{border-image:url(:/img//img/model.jpg);}");
         patButton->setMinimumSize(30,100);
     }
-    else if (p == 2)    //Éè±¸°´Å¥¸´Ô­
+    else if (p == 2)    //ï¿½è±¸ï¿½ï¿½Å¥ï¿½ï¿½Ô­
     {
         equButton->setStyleSheet("QPushButton{border-image:url(:/img//img/equipment.jpg);}");
         equButton->setMinimumSize(30,100);
     }
-    else if (p == 3)    //»·ÕÕÃ÷°´Å¥¸´Ô­
+    else if (p == 3)    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½Ô­
     {
         lghButton->setStyleSheet("QPushButton{border-image:url(:/img//img/light.jpg);}");
         lghButton->setMinimumSize(30,100);
     }
-    else if (p == 4)    //»·¾³°´Å¥¸´Ô­
+    else if (p == 4)    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½Ô­
     {
         eviButton->setStyleSheet("QPushButton{border-image:url(:/img//img/atmosphere.jpg);}");
         eviButton->setMinimumSize(30,100);
@@ -278,27 +286,34 @@ void Dialog::setModeText(int mode)
 {
     if (mode == 0)
     {
-        curPat = "°²È«";
-        this->patShowLab->setText("°²È«Ä£Ê½");
+        curPat = "ï¿½ï¿½È«";
+        this->patShowLab->setText("ï¿½ï¿½È«Ä£Ê½");
     }
     else if (mode == 1)
     {
-        curPat = "Ë¯Ãß";
-        this->patShowLab->setText("Ë¯ÃßÄ£Ê½");
+        curPat = "Ë¯ï¿½ï¿½";
+        this->patShowLab->setText("Ë¯ï¿½ï¿½Ä£Ê½");
     }
     else if (mode == 2)
     {
-        curPat = "Àë¼Ò";
-        this->patShowLab->setText("Àë¼ÒÄ£Ê½");
+        curPat = "ï¿½ï¿½ï¿½";
+        this->patShowLab->setText("ï¿½ï¿½ï¿½Ä£Ê½");
     }
     else if (mode == 3)
     {
-        curPat = "Éú»î";
-        this->patShowLab->setText("Éú»îÄ£Ê½");
+        curPat = "ï¿½ï¿½ï¿½ï¿½";
+        this->patShowLab->setText("ï¿½ï¿½ï¿½ï¿½Ä£Ê½");
     }
-    //qDebug() << "½ÓÊÕ³É¹¦";
+    //qDebug() << "ï¿½ï¿½ï¿½Õ³É¹ï¿½";
 }
 
+void Dialog::readMyCom(){
+    QByteArray temp = serial->myCom->readAll();
+    QString s(temp);
+    if (s == "m"){
+        qDebug() << "ok";
+    }
+}
 
 
 
