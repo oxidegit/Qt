@@ -1,5 +1,6 @@
 #include "environmentui.h"
 #include "ui_environmentui.h"
+#include "serialcommunication.h"
 
 environmentUI::environmentUI(QWidget *parent) :
     QWidget(parent),
@@ -32,6 +33,8 @@ void environmentUI::on_Add_Temperature_clicked()
     }
     QString data1 = QString("%1").arg(Temperature);
     ui->Label_Temperature->setText(data1);
+
+    serial->qtUpdateEnvirState(TEMPERATUREP_PLUS);
 }
 
 void environmentUI::on_Reduce_Temperature_clicked()
@@ -43,6 +46,8 @@ void environmentUI::on_Reduce_Temperature_clicked()
     }
     QString data1 = QString("%1").arg(Temperature);
     ui->Label_Temperature->setText(data1);
+
+    serial->qtUpdateEnvirState(TEMPERATUREP_SUB);
 }
 
 void environmentUI::on_Add_Humidity_clicked()
@@ -55,6 +60,8 @@ void environmentUI::on_Add_Humidity_clicked()
     }
     QString data1 = QString("%1").arg(humidity);
     ui->Label_Humidity->setText(data1);
+
+    serial->qtUpdateEnvirState(HUMIDITY_PLUS);
 }
 
 void environmentUI::on_Reduce_Humidity_clicked()
@@ -66,13 +73,15 @@ void environmentUI::on_Reduce_Humidity_clicked()
     }
     QString data1 = QString("%1").arg(humidity);
     ui->Label_Humidity->setText(data1);
+
+    serial->qtUpdateEnvirState(HUMIDITY_SUB);
 }
 
 
 void environmentUI::getTemperature(int t)
 {
      Temperature = t;
-     //qDebug() << "接收成功";
+     //qDebug() << "锟斤拷锟秸成癸拷";
      QString data1 = QString("%1").arg(Temperature);
      ui->Label_Temperature->setText(data1);
 }
@@ -80,7 +89,7 @@ void environmentUI::getTemperature(int t)
 void environmentUI::gethumidity(int h)
 {
      humidity = h;
-     //qDebug() << "接收成功";
+     //qDebug() << "锟斤拷锟秸成癸拷";
      QString data1 = QString("%1").arg(humidity);
      ui->Label_Humidity->setText(data1);
 }

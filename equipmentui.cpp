@@ -8,15 +8,15 @@ equipmentUI::equipmentUI(QWidget *parent) :
     QLabel *televLabel = new QLabel(this);
     QLabel *soundLabel = new QLabel(this);
 
-    //televLabel->setText("<font color=white size=18><B>µçÊÓ</B></font>");
+    //televLabel->setText("<font color=white size=18><B>ï¿½ï¿½ï¿½ï¿½</B></font>");
     //soundLabel->setStyleSheet("color:#fffafa;");
 
     QLabel *Label_1 = new QLabel(this);
     QLabel *Label_2 = new QLabel(this);
     QLabel *Label_3 = new QLabel(this);
     QLabel *Label_4 = new QLabel(this);
-    Label_1->setText("<font face='STHupo' color=white size=18>µçÊÓ          </font>");
-    Label_2->setText("<font face='STHupo' color=white size=18>ÒôÏì          </font>");
+    Label_1->setText("<font face='STHupo' color=white size=18>ï¿½ï¿½ï¿½ï¿½          </font>");
+    Label_2->setText("<font face='STHupo' color=white size=18>ï¿½ï¿½ï¿½ï¿½          </font>");
     Label_3->setText("   ");
     Label_4->setText("   ");
 
@@ -42,23 +42,26 @@ equipmentUI::equipmentUI(QWidget *parent) :
     mainLayout->addWidget(Label_3,1,4,1,1);
     mainLayout->addWidget(Label_4,3,4,1,1);
 
-    // ÁĞ±È   µÚ0ÁĞÓëµÚ3ÁĞÖ®±ÈÎª 3:1
+    // ï¿½Ğ±ï¿½   ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½Ö®ï¿½ï¿½Îª 3:1
     //mainLayout->setColumnStretch(0,1);
     //mainLayout->setColumnStretch(3,1);
-    // ĞĞ±È   µÚ0ĞĞÓëµÚ1ĞĞÖ®±ÈÎª1:1
+    // ï¿½Ğ±ï¿½   ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½Ö®ï¿½ï¿½Îª1:1
    // mainLayout-> setRowStretch(0, 1);
    // mainLayout-> setRowStretch(1, 1);
 
 
 
-    // ÉèÖÃË®Æ½¼ä¾à
+    // ï¿½ï¿½ï¿½ï¿½Ë®Æ½ï¿½ï¿½ï¿½
     mainLayout->setHorizontalSpacing(100);
-    // ÉèÖÃ´¹Ö±¼ä¾à
+    // ï¿½ï¿½ï¿½Ã´ï¿½Ö±ï¿½ï¿½ï¿½
     mainLayout->setVerticalSpacing(80);
-    // ÉèÖÃÍâ¼ä¾à
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     mainLayout->setContentsMargins(60,50,60,50);
 
     this->setLayout(mainLayout);
+
+    connect(switchTelBut,SIGNAL(checkedChanged(bool)),this,SLOT(switchTelButSlot(bool)));
+    connect(switchSouBut,SIGNAL(checkedChanged(bool)),this,SLOT(switchSouButSlot(bool)));
 
     connect(switchTelBut,SIGNAL(clicked()),this,SLOT(switchTelButSlot()));
     connect(switchSouBut,SIGNAL(clicked()),this,SLOT(switchSouButSlot()));
@@ -72,13 +75,13 @@ equipmentUI::~equipmentUI()
 }
 
 
-void equipmentUI::switchTelButSlot()
+void equipmentUI::switchTelButSlot(bool)
 {
-
+    serial->qtUpdateEquipState(TV);//åŒæ­¥qt
 }
 
 
 void equipmentUI::switchSouButSlot()
 {
-
+    serial->qtUpdateEquipState(AUDIO);//åŒæ­¥qt
 }

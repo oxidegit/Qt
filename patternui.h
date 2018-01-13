@@ -9,14 +9,14 @@
 #include <QPushButton>
 #include <QBoxLayout>
 #include <QVBoxLayout>   // Ë®Æ½
-#include <QHBoxLayout>   // ´¹Ö±
-#include <QGridLayout>   // Íø×´
+#include <QHBoxLayout>   // ï¿½ï¿½Ö±
+#include <QGridLayout>   // ï¿½ï¿½×´
 #include <QFormLayout>
 #include <QWidget>
 #include <QDebug>
 #include <QLineEdit>
 
-
+#include "serialcommunication.h"
 
 namespace Ui {
     class patternUI;
@@ -41,7 +41,7 @@ class patternUI : public QWidget
 public:
     explicit patternUI(QWidget *parent = 0);
     ~patternUI();
-
+    void setSerial(SerialCommunication *s){serial = s;};
     void setPattern(QString p);
 
     int sendTem(int p);
@@ -81,6 +81,7 @@ private slots:
     //void toDialogSlot();
 
 private:
+    SerialCommunication *serial;
     Ui::patternUI *ui;
 
     QLabel *doorlack;
