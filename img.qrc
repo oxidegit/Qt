@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>img/background.jpg</file>
+        <file>img/atmosphere.jpg</file>
+        <file>img/atmosphere_p.jpg</file>
+        <file>img/equipment.jpg</file>
+        <file>img/equipment_p.jpg</file>
+        <file>img/light.jpg</file>
+        <file>img/light_p.jpg</file>
+        <file>img/menu.png</file>
+        <file>img/model.jpg</file>
+        <file>img/model_p.jpg</file>
+    </qresource>
+</RCC>
