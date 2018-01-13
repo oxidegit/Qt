@@ -1,23 +1,16 @@
 #include "dialog.h"
 #include "ui_dialog.h"
 
-#include <qDebug>
-
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
-    this->serial = new SerialCommunication();
-
-    connect(serial->myCom, SIGNAL(readyRead()), this, SLOT(readMyCom()));
 
     this->setFixedSize(900,700);
 
     curPat = "生活";
-    npat = 0;
-    nequ = 0;
-    nlgh = 0;
-    nevi = 0;
+    curButton = 0;
+    prveButton = 0;
 
     QDateTime current_date_time = QDateTime::currentDateTime();
     QString current_date = current_date_time.toString("yyyy.MM.dd hh:mm ddd");
@@ -32,7 +25,7 @@ Dialog::Dialog(QWidget *parent) :
     patShowLab->setPalette(pe);
     timShowLab->setPalette(pe);
 
-    QFont ft("Microsoft YaHei", 18, 75);
+    QFont ft("STHupo", 24, 20);
     //ft.setPointSize(18);
     patShowLab->setFont(ft);
     timShowLab->setFont(ft);
@@ -40,7 +33,6 @@ Dialog::Dialog(QWidget *parent) :
     QHBoxLayout *topLayout = new QHBoxLayout(); // 上面的label
     topLayout->addWidget(patShowLab);   // 模式。
     topLayout->addWidget(timShowLab);   // 时间
-    //patShowLab->show();
     topLayout->setMargin(0);
     topLayout->setSpacing(0);
 
@@ -71,7 +63,7 @@ Dialog::Dialog(QWidget *parent) :
 
 
     //bomLayout->setMargin(15);
-    bomLayout->setContentsMargins(50,30,50,5);
+    bomLayout->setContentsMargins(50,30,50,0);
     //bomLayout->setContentsMargins(QMargins(0,0,0,0));
     bomLayout->setSpacing(100);
 
@@ -81,11 +73,6 @@ Dialog::Dialog(QWidget *parent) :
     ligWeidget = new lightUI(this);
     equWeidget = new equipmentUI(this);
     envWeidget = new environmentUI(this);
-
-    patWeidget->setSerial(serial);
-    ligWeidget->setSerial(serial);
-    equWeidget->setSerial(serial);
-    envWeidget->setSerial(serial);
 
     patWeidget->setValue();
 
@@ -132,7 +119,17 @@ Dialog::~Dialog()
 
 void Dialog::patButtonSlot()
 {
-    npat ++ ;
+    curButton = 1;
+
+    int p = getPrve();
+    setPrve(curButton);
+
+    setButtonImg(curButton,p);
+
+    patButton->setEnabled(false);
+    equButton->setEnabled(true);
+    lghButton->setEnabled(true);
+    eviButton->setEnabled(true);
 
     patWeidget->show();
 
@@ -142,21 +139,22 @@ void Dialog::patButtonSlot()
     envWeidget->hide();
     patWeidget->setPattern(curPat);
 
-    if (npat%2 == 0)
-    {
-            patButton->setStyleSheet("QPushButton{border-image:url(:/img//img/model.jpg);}");
-            patButton->setMinimumSize(30,100);
-     }
-     else
-     {
-            patButton->setStyleSheet("QPushButton{border-image:url(:/img//img/model_p.jpg);}");
-            patButton->setMinimumSize(30,120);
-     }
-
 }
 
 void Dialog::equButtonSlot()
 {
+    curButton = 2;
+
+    int p = getPrve();
+    setPrve(curButton);
+
+    setButtonImg(curButton,p);
+
+    patButton->setEnabled(true);
+    equButton->setEnabled(false);
+    lghButton->setEnabled(true);
+    eviButton->setEnabled(true);
+
     equWeidget->show();
 
     mainShowLab->hide();
@@ -164,18 +162,22 @@ void Dialog::equButtonSlot()
     ligWeidget->hide();
     patWeidget->hide();
 
-    /*if (j%2 == 0)
-    {
-        ui->pushButton->setStyleSheet(tr("border-image: url(:/image/room1_on.png);"));
-     }
-     else
-     {
-         ui->pushButton->setStyleSheet(tr("border-image: url(:/image/room1.png);"));
-     }*/
 }
 
 void Dialog::lghButtonSlot()
 {
+    curButton = 3;
+
+    int p = getPrve();
+    setPrve(curButton);
+
+    setButtonImg(curButton,p);
+
+    patButton->setEnabled(true);
+    equButton->setEnabled(true);
+    lghButton->setEnabled(false);
+    eviButton->setEnabled(true);
+
     ligWeidget->show();
 
     mainShowLab->hide();
@@ -183,33 +185,89 @@ void Dialog::lghButtonSlot()
     envWeidget->hide();
     equWeidget->hide();
 
- /*   if (j%2 == 0)
-    {
-        ui->pushButton->setStyleSheet(tr("border-image: url(:/image/room1_on.png);"));
-     }
-     else
-     {
-         ui->pushButton->setStyleSheet(tr("border-image: url(:/image/room1.png);"));
-     } */
 }
 
 void Dialog::eviButtonSlot()
 {
+    curButton = 4;
+
+    int p = getPrve();
+    setPrve(curButton);
+
+    setButtonImg(curButton,p);
+
+    patButton->setEnabled(true);
+    equButton->setEnabled(true);
+    lghButton->setEnabled(true);
+    eviButton->setEnabled(false);
+
     envWeidget->show();
 
     mainShowLab->hide();
     patWeidget->hide();
     equWeidget->hide();
     ligWeidget->hide();
+}
 
-  /*  if (j%2 == 0)
+
+int Dialog::getPrve()
+{
+    return prveButton;
+}
+
+void Dialog::setPrve(int c)
+{
+    prveButton = c;
+}
+
+void Dialog::setButtonImg(int c,int p)
+{
+    if (c == 1)    // 模式按钮按下
     {
-        ui->pushButton->setStyleSheet(tr("border-image: url(:/image/room1_on.png);"));
-     }
-     else
-     {
-         ui->pushButton->setStyleSheet(tr("border-image: url(:/image/room1.png);"));
-     }*/
+        patButton->setStyleSheet("QPushButton{border-image:url(:/img//img/model_p.jpg);}");
+        patButton->setMinimumSize(30,120);
+
+    }
+    else if (c == 2)    // 设备按钮按下
+    {
+        equButton->setStyleSheet("QPushButton{border-image:url(:/img//img/equipment_p.jpg);}");
+        equButton->setMinimumSize(30,120);
+    }
+    else if (c == 3)    //照明按钮按下
+    {
+        lghButton->setStyleSheet("QPushButton{border-image:url(:/img//img/light_p.jpg);}");
+        lghButton->setMinimumSize(30,120);
+    }
+    else if (c == 4)    //环境按钮按下
+    {
+        eviButton->setStyleSheet("QPushButton{border-image:url(:/img//img/atmosphere_p.jpg);}");
+        eviButton->setMinimumSize(30,120);
+    }
+
+    ///////////////////////////////////////////////////////////////
+
+
+    if (p == 1)    //模式按钮复原
+    {
+        patButton->setStyleSheet("QPushButton{border-image:url(:/img//img/model.jpg);}");
+        patButton->setMinimumSize(30,100);
+    }
+    else if (p == 2)    //设备按钮复原
+    {
+        equButton->setStyleSheet("QPushButton{border-image:url(:/img//img/equipment.jpg);}");
+        equButton->setMinimumSize(30,100);
+    }
+    else if (p == 3)    //环照明按钮复原
+    {
+        lghButton->setStyleSheet("QPushButton{border-image:url(:/img//img/light.jpg);}");
+        lghButton->setMinimumSize(30,100);
+    }
+    else if (p == 4)    //环境按钮复原
+    {
+        eviButton->setStyleSheet("QPushButton{border-image:url(:/img//img/atmosphere.jpg);}");
+        eviButton->setMinimumSize(30,100);
+    }
+
 }
 
 void Dialog::setModeText(int mode)
@@ -235,19 +293,6 @@ void Dialog::setModeText(int mode)
         this->patShowLab->setText("生活模式");
     }
     //qDebug() << "接收成功";
-}
-
-
-void Dialog::readMyCom()
-{
-    QByteArray temp = serial->myCom->readAll();
-    qDebug() << temp;
-
-    QString s(temp);
-
-    if (s == "m"){
-        qDebug() << "ok";
-    }
 }
 
 

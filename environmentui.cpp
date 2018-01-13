@@ -1,7 +1,5 @@
 #include "environmentui.h"
 #include "ui_environmentui.h"
-#include "serialcommunication.h"
-#include <QDebug>
 
 environmentUI::environmentUI(QWidget *parent) :
     QWidget(parent),
@@ -9,7 +7,6 @@ environmentUI::environmentUI(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //serial = new SerialCommunication();
 
     Temperature = 23;
     humidity = 60;
@@ -35,9 +32,6 @@ void environmentUI::on_Add_Temperature_clicked()
     }
     QString data1 = QString("%1").arg(Temperature);
     ui->Label_Temperature->setText(data1);
-
-    qDebug() << "TEMPERATUREP_PLUS";
-    serial->qtUpdateEnvirState(TEMPERATUREP_PLUS);
 }
 
 void environmentUI::on_Reduce_Temperature_clicked()
@@ -49,9 +43,6 @@ void environmentUI::on_Reduce_Temperature_clicked()
     }
     QString data1 = QString("%1").arg(Temperature);
     ui->Label_Temperature->setText(data1);
-
-    qDebug() << "HUMIDITY_PLUS";
-    serial->qtUpdateEnvirState(TEMPERATUREP_SUB);
 }
 
 void environmentUI::on_Add_Humidity_clicked()
@@ -64,9 +55,6 @@ void environmentUI::on_Add_Humidity_clicked()
     }
     QString data1 = QString("%1").arg(humidity);
     ui->Label_Humidity->setText(data1);
-
-    qDebug() << "HUMIDITY_SUB";
-    serial->qtUpdateEnvirState(HUMIDITY_PLUS);
 }
 
 void environmentUI::on_Reduce_Humidity_clicked()
@@ -78,9 +66,6 @@ void environmentUI::on_Reduce_Humidity_clicked()
     }
     QString data1 = QString("%1").arg(humidity);
     ui->Label_Humidity->setText(data1);
-
-    qDebug() << "TEMPERATUREP_SUB";
-    serial->qtUpdateEnvirState(HUMIDITY_SUB);//
 }
 
 

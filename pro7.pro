@@ -17,11 +17,7 @@ SOURCES += main.cpp\
     equipmentui.cpp \
     environmentui.cpp \
     switchbutton.cpp \
-    test.cpp \
-    win_qextserialport.cpp \
-    serialcommunication.cpp \
-    qextserialport.cpp \
-    qextserialbase.cpp
+    test.cpp
 
 HEADERS  += dialog.h \
     patternui.h \
@@ -29,11 +25,7 @@ HEADERS  += dialog.h \
     equipmentui.h \
     environmentui.h \
     switchbutton.h \
-    test.h \
-    serialcommunication.h \
-    qextserialport.h \
-    qextserialbase.h \
-    win_qextserialport.h
+    test.h
 
 FORMS    += dialog.ui \
     patternui.ui \
