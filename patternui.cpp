@@ -1,10 +1,13 @@
 #include "patternui.h"
 #include "ui_patternui.h"
+#include "serialcommunication.h"
 
 patternUI::patternUI(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::patternUI)
 {
+    //serial = new SerialCommunication();
+
     //QString curPat = getCurPattern();
     aqPatButton = new QPushButton("安全模式",this);
     smPatButton = new QPushButton("睡眠模式",this);
@@ -150,6 +153,16 @@ void patternUI::shPatButtonSlot()
 
 void patternUI::chooseButSlot()   // 更改界面模式显示
 {
+    if (pchoose == 0){
+        serial->qtUpdatePatternState(SAFE);
+    }else if (pchoose == 1){
+        serial->qtUpdatePatternState(SLEEP);
+    }else if (pchoose == 2){
+        serial->qtUpdatePatternState(OUTSIDE);
+    }else if (pchoose == 3){
+        serial->qtUpdatePatternState(LIFE);
+    }
+
     emit signalP(pchoose);
 
     emit signalT(pattern[pchoose].p_Temp);

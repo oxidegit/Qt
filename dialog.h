@@ -13,10 +13,16 @@
 #include <QVBoxLayout>   // Ë®Æ½
 #include <QHBoxLayout>   // ´¹Ö±
 #include <QGridLayout>   // Íø×´
+
+#include <QIODevice>
+
 #include "patternui.h"
 #include "lightui.h"
 #include "equipmentui.h"
 #include "environmentui.h"
+
+#include "win_qextserialport.h"
+#include "serialcommunication.h"
 
 //#include "data.h"
 
@@ -34,7 +40,7 @@ public:
 
 public slots:
     void setModeText(int mode);
-
+    void readMyCom();
 private slots:
     void patButtonSlot();
     void equButtonSlot();
@@ -66,7 +72,7 @@ private:
     int nlgh;
     int nevi;
 
-
+    SerialCommunication *serial;
 };
 
 #endif // DIALOG_H

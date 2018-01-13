@@ -1,11 +1,14 @@
 #include "lightui.h"
 #include "ui_lightui.h"
+#include "serialcommunication.h"
 #include <QDebug>
 
 lightUI::lightUI(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::lightUI)
 {
+    //serial = new SerialCommunication();
+
     i = 0;
     j = 0;
     n = 0;
@@ -24,11 +27,14 @@ void lightUI::on_pushButton_clicked()
     if (j%2 == 0)
     {
         ui->pushButton->setStyleSheet(tr("border-image: url(:/image/room1_on.png);"));
-     }
-     else
-     {
-         ui->pushButton->setStyleSheet(tr("border-image: url(:/image/room1.png);"));
-     }
+    }
+    else
+    {
+        ui->pushButton->setStyleSheet(tr("border-image: url(:/image/room1.png);"));
+    }
+
+    //Í¬²½µ½qt¶Ë
+    serial->qtUpdateLightState(KICHEN);
 
 
 }
@@ -46,6 +52,7 @@ void lightUI::on_pushButton_2_clicked()
         ui->pushButton_2->setStyleSheet(tr("border-image: url(:/image/room2.png);"));
     }
 
+    serial->qtUpdateLightState(DRAWINGROOM);
 }
 
 void lightUI::on_pushButton_3_clicked()
@@ -60,6 +67,8 @@ void lightUI::on_pushButton_3_clicked()
     {
         ui->pushButton_3->setStyleSheet(tr("border-image: url(:/image/room4.png);"));
     }
+
+    serial->qtUpdateLightState(BATHROOM);
 }
 
 void lightUI::on_pushButton_4_clicked()
@@ -74,4 +83,6 @@ void lightUI::on_pushButton_4_clicked()
     {
         ui->pushButton_4->setStyleSheet(tr("border-image: url(:/image/room3.png);"));
     }
+
+    serial->qtUpdateLightState(BEDROOM);
 }

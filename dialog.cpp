@@ -1,10 +1,15 @@
 #include "dialog.h"
 #include "ui_dialog.h"
 
+#include <qDebug>
+
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
+    this->serial = new SerialCommunication();
+
+    connect(serial->myCom, SIGNAL(readyRead()), this, SLOT(readMyCom()));
 
     this->setFixedSize(900,700);
 
@@ -76,6 +81,11 @@ Dialog::Dialog(QWidget *parent) :
     ligWeidget = new lightUI(this);
     equWeidget = new equipmentUI(this);
     envWeidget = new environmentUI(this);
+
+    patWeidget->setSerial(serial);
+    ligWeidget->setSerial(serial);
+    equWeidget->setSerial(serial);
+    envWeidget->setSerial(serial);
 
     patWeidget->setValue();
 
@@ -225,6 +235,19 @@ void Dialog::setModeText(int mode)
         this->patShowLab->setText("生活模式");
     }
     //qDebug() << "接收成功";
+}
+
+
+void Dialog::readMyCom()
+{
+    QByteArray temp = serial->myCom->readAll();
+    qDebug() << temp;
+
+    QString s(temp);
+
+    if (s == "m"){
+        qDebug() << "ok";
+    }
 }
 
 
