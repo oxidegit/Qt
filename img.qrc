@@ -1,6 +1,21 @@
 <RCC>
     <qresource prefix="/img">
         <file>img/background.jpg</file>
+        <file>img/TV.png</file>
+        <file>img/JBL.png</file>
+        <file>img/temperature.png</file>
+        <file>img/arrow.png</file>
+        <file>img/backblue.png</file>
+        <file>img/house.png</file>
+        <file>img/leave.png</file>
+        <file>img/leave_p.png</file>
+        <file>img/life.png</file>
+        <file>img/life_p.png</file>
+        <file>img/line.png</file>
+        <file>img/safe.png</file>
+        <file>img/safe_p.png</file>
+        <file>img/sleep.png</file>
+        <file>img/sleep_p.png</file>
         <file>img/atmosphere.jpg</file>
         <file>img/atmosphere_p.jpg</file>
         <file>img/equipment.jpg</file>

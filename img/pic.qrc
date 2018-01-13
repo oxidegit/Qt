@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>house.png</file>
+        <file>room2.png</file>
+        <file>room2_on.png</file>
+        <file>room3.png</file>
+        <file>room3_on.png</file>
+        <file>room4.png</file>
+        <file>room4_on.png</file>
+        <file>pic.qrc</file>
+        <file>room1.png</file>
+        <file>room1_on.png</file>
+    </qresource>
+</RCC>

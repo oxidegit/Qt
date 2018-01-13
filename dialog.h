@@ -7,6 +7,8 @@
 #include <QString>
 #include <QDateTime>
 #include <QPushButton>
+#include <QPalette>
+#include <QFont>
 #include <QBoxLayout>
 #include <QVBoxLayout>   // Ë®Æ½
 #include <QHBoxLayout>   // ´¹Ö±
@@ -59,6 +61,10 @@ private:
 
     //Data data;
     QString curPat;
+    int npat;
+    int nequ;
+    int nlgh;
+    int nevi;
 
 
 };
